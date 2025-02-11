@@ -5,13 +5,18 @@
     "workspaces": [
         "src/application",
         "src/domain",
+        "src/infrastructure/database",
         "src/infrastructure/interfaces/grpc",
-        "src/infrastructure/database"
+        "src/infrastructure/web/supertodo-web-app"
     ],
     "scripts": {
         "grpc:start": "npm run start --workspace @supertodo/grpc-interface",
         "grpc:dev": "npm run dev --workspace @supertodo/grpc-interface",
-        "grpc:gen": "npm run gen:todo.proto --workspace @supertodo/grpc-interface"
+        "grpc:gen": "npm run gen:todo.proto --workspace @supertodo/grpc-interface",
+        "web:start": "npm run start --workspace @supertodo/web",
+        "web:dev": "npm run dev --workspace @supertodo/web",
+        "web:build": "npm run build --workspace @supertodo/web",
+        "web:lint": "npm run lint --workspace @supertodo/web"
     },
     "dependencies": {
         "dotenv": "^16.4.7"
