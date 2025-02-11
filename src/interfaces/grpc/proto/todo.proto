@@ -5,6 +5,7 @@ package todo;
 service TodoService {
   rpc CreateTodo (CreateTodoRequest) returns (CreateTodoResponse) {}
   rpc ListTodos (ListTodosRequest) returns (ListTodosResponse) {}
+  rpc SubscribeTodos (SubscribeTodoRequest) returns (stream CreateTodoResponse) {}
 }
 
 message CreateTodoRequest {
@@ -22,3 +23,5 @@ message ListTodosRequest {}
 message ListTodosResponse {
   repeated CreateTodoResponse todos = 1;
 }
+
+message SubscribeTodoRequest {}
