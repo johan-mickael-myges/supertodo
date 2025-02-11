@@ -1,8 +1,8 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const grpc = require('@grpc/grpc-js');
-const protoLoader = require('@grpc/proto-loader');
-const path = require('path');
+const grpc = require("@grpc/grpc-js");
+const protoLoader = require("@grpc/proto-loader");
+const path = require("path");
 const EventEmitter = require("events");
 
 const grpcServerReflection = require("grpc-server-reflection");
@@ -17,9 +17,9 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 const todoProto = grpc.loadPackageDefinition(packageDefinition).todo;
 
-const TodoRepository = require("../../repositories/TodoRepository");
-const createTodoUseCaseFactory = require("../../usecases/createTodo");
-const getTodosUseCaseFactory = require("../../usecases/getTodos");
+const TodoRepository = require("@supertodo/database/TodoRepository");
+const createTodoUseCaseFactory = require("@supertodo/application/usecases/createTodo");
+const getTodosUseCaseFactory = require("@supertodo/application/usecases/getTodos");
 
 const todoRepository = new TodoRepository();
 const createTodo = createTodoUseCaseFactory({ todoRepository });

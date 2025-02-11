@@ -1,20 +1,22 @@
 {
-  "name": "supertodo",
-  "version": "1.0.0",
-  "description": "Application Todo",
-  "main": "src/interfaces/grpc/server.js",
-  "scripts": {
-    "start": "node src/interfaces/grpc/server.js",
-    "dev": "nodemon src/interfaces/grpc/server.js",
-    "gen:todo.proto": "protoc --proto_path=./src/interfaces/grpc/proto --include_imports --include_source_info --descriptor_set_out=./src/interfaces/grpc/proto/todo_descriptor_set.bin ./src/interfaces/grpc/proto/todo.proto"
-  },
-  "dependencies": {
-    "@grpc/grpc-js": "^1.12.6",
-    "@grpc/proto-loader": "^0.7.13",
-    "dotenv": "^16.4.7",
-    "grpc-server-reflection": "^0.1.5"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.9"
-  }
+    "name": "supertodo",
+    "version": "1.0.0",
+    "description": "Application Todo",
+    "workspaces": [
+        "src/application",
+        "src/domain",
+        "src/infrastructure/interfaces/grpc",
+        "src/infrastructure/database"
+    ],
+    "scripts": {
+        "grpc:start": "npm run start --workspace @supertodo/grpc-interface",
+        "grpc:dev": "npm run dev --workspace @supertodo/grpc-interface",
+        "grpc:gen": "npm run gen:todo.proto --workspace @supertodo/grpc-interface"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.7"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    }
 }
