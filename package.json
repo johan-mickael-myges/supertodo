@@ -8,6 +8,7 @@
         "src/infrastructure/database",
         "src/infrastructure/interfaces/graphql",
         "src/infrastructure/interfaces/grpc",
+        "src/infrastructure/interfaces/rest",
         "src/infrastructure/web"
     ],
     "scripts": {
@@ -16,6 +17,8 @@
         "grpc:start": "npm run start --workspace @supertodo/grpc-interface",
         "grpc:dev": "npm run dev --workspace @supertodo/grpc-interface",
         "grpc:gen:todo": "npm run gen:todo.proto --workspace @supertodo/grpc-interface",
+        "rest:start": "npm run start --workspace @supertodo/rest-interface",
+        "rest:dev": "npm run dev --workspace @supertodo/rest-interface",
         "web:start": "npm run start --workspace @supertodo/web",
         "web:dev": "npm run dev --workspace @supertodo/web",
         "web:build": "npm run build --workspace @supertodo/web",
