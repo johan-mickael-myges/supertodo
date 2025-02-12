@@ -21,6 +21,10 @@ class TodoRepository {
     getAll() {
         return this.todos;
     }
+
+    searchTodoByTitle(title) {
+        return this.todos.filter((todo) => todo.title.includes(title));
+    }
 }
 
 module.exports = TodoRepository;

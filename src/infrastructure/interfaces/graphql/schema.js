@@ -11,6 +11,7 @@ const typeDefs = gql`
 
     type Query {
         todos: [Todo!]!
+        searchTodoByTitle(title: String!): [Todo!]!
     }
 
     input CreateTodoInput {

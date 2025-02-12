@@ -9,6 +9,11 @@ module.exports = {
 
             return todos;
         },
+        searchTodoByTitle: async (_, { title }, { searchTodoByTitle }) => {
+            const todos = await searchTodoByTitle(title);
+
+            return todos;
+        },
     },
     Mutation: {
         createTodo: async (_, args, { createTodo }) => {
