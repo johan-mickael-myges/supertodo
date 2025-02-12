@@ -47,8 +47,7 @@ function createTodoHandler(call, callback) {
 
 function listTodosHandler(call, callback) {
     try {
-        const todos = getTodos(); // Assume this returns an array of todo objects
-        // Map each todo into a plain object matching CreateTodoResponse:
+        const todos = getTodos();
         const todosArray = todos.map((todo) => ({
             id: todo.id || null,
             title: todo.title || null,
@@ -57,7 +56,6 @@ function listTodosHandler(call, callback) {
             author: todo.author || null,
         }));
 
-        // Return an object with a key "todos" that is the array:
         callback(null, { todos: todosArray });
     } catch (err) {
         callback(err);
@@ -65,10 +63,8 @@ function listTodosHandler(call, callback) {
 }
 
 function subscribeTodosHandler(call) {
-    // Listener that writes new todos to the stream.
     const listener = (newTodo) => {
         try {
-            // Write the new todo to the stream.
             call.write({
                 id: newTodo.id || null,
                 title: newTodo.title || null,
@@ -83,7 +79,6 @@ function subscribeTodosHandler(call) {
 
     createdTodoEvents.on("todo-created", listener);
 
-    // Listen for errors on the stream so that they are handled gracefully.
     call.on("error", (err) => {
         console.error("Stream error occurred:", err);
     });

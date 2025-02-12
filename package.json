@@ -16,6 +16,7 @@
         "graphql:dev": "npm run dev --workspace @supertodo/graphql-interface",
         "grpc:start": "npm run start --workspace @supertodo/grpc-interface",
         "grpc:dev": "npm run dev --workspace @supertodo/grpc-interface",
+        "grpc:proxy": "npm run proxy --workspace @supertodo/grpc-interface",
         "grpc:gen:todo": "npm run gen:todo.proto --workspace @supertodo/grpc-interface",
         "rest:start": "npm run start --workspace @supertodo/rest-interface",
         "rest:dev": "npm run dev --workspace @supertodo/rest-interface",

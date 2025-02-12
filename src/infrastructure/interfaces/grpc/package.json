@@ -6,6 +6,7 @@
     "scripts": {
         "start": "node server.js",
         "dev": "nodemon server.js",
+        "proxy": "bash start_proxy.sh",
         "gen:todo.proto": "protoc --proto_path=./proto --include_imports --include_source_info --descriptor_set_out=./proto/todo_descriptor_set.bin todo.proto"
     },
     "dependencies": {

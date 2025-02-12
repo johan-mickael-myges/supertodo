@@ -12,15 +12,9 @@ module.exports = {
     },
     Mutation: {
         createTodo: async (_, args, { createTodo }) => {
-            const todo = await createTodo(args);
-            // Publish the newly created todo so that subscriptions get notified
+            const todo = await createTodo(args.input);
             pubsub.publish(TODO_CREATED, { todoCreated: todo });
             return todo;
-        },
-    },
-    Subscription: {
-        todoCreated: {
-            subscribe: () => pubsub.asyncIterator([TODO_CREATED]),
         },
     },
 };

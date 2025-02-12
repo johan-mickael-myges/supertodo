@@ -23,10 +23,6 @@ const typeDefs = gql`
     type Mutation {
         createTodo(input: CreateTodoInput!): Todo!
     }
-
-    type Subscription {
-        todoCreated: Todo!
-    }
 `;
 
 module.exports = typeDefs;

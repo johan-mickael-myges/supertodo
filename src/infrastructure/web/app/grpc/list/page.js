@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { grpc } from "@improbable-eng/grpc-web";
 import { TodoServiceClient } from "../../generated/todo_grpc_web_pb";
 import { SubscribeTodoRequest } from "../../generated/todo_pb";
 
@@ -15,14 +14,11 @@ export default function HomePage() {
         let cancelled = false;
 
         const startSubscription = () => {
-            // Reset error state
             setStreamError(null);
             console.log("Starting subscription...");
 
-            // Create an empty subscription request.
             const request = new SubscribeTodoRequest();
 
-            // Instantiate the client (using the gRPC-Web proxy URL).
             const client = new TodoServiceClient(
                 "http://localhost:8080",
                 null,
@@ -50,7 +46,7 @@ export default function HomePage() {
             stream.on("error", (err) => {
                 console.error("Stream error:", err);
                 setStreamError(err);
-                // If not cancelled, schedule a reconnection after 3 seconds.
+                // If not cancelled, schedule a reconnection after 1 seconds.
                 if (!cancelled) {
                     reconnectTimeout = setTimeout(() => {
                         console.log("Reconnecting subscription after error...");
@@ -73,7 +69,6 @@ export default function HomePage() {
             });
         };
 
-        // Start the initial subscription.
         startSubscription();
 
         // Cleanup: cancel the stream and clear timeouts when the component unmounts.
