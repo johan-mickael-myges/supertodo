@@ -7,12 +7,12 @@
         "src/domain",
         "src/infrastructure/database",
         "src/infrastructure/interfaces/grpc",
-        "src/infrastructure/web/supertodo-web-app"
+        "src/infrastructure/web"
     ],
     "scripts": {
         "grpc:start": "npm run start --workspace @supertodo/grpc-interface",
         "grpc:dev": "npm run dev --workspace @supertodo/grpc-interface",
-        "grpc:gen": "npm run gen:todo.proto --workspace @supertodo/grpc-interface",
+        "grpc:gen:todo": "npm run gen:todo.proto --workspace @supertodo/grpc-interface",
         "web:start": "npm run start --workspace @supertodo/web",
         "web:dev": "npm run dev --workspace @supertodo/web",
         "web:build": "npm run build --workspace @supertodo/web",

@@ -10,12 +10,17 @@ service TodoService {
 
 message CreateTodoRequest {
   string title = 1;
+  string description = 2;
+  bool completed = 3;
+  string author = 4;
 }
 
 message CreateTodoResponse {
   int32 id = 1;
   string title = 2;
-  bool completed = 3;
+  string description = 3;
+  bool completed = 4;
+  string author = 5;
 }
 
 message ListTodosRequest {}

@@ -17,7 +17,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 const todoProto = grpc.loadPackageDefinition(packageDefinition).todo;
 
-const TodoRepository = require("@supertodo/database/TodoRepository");
+const TodoRepository = require("@supertodo/database/InMemoryTodoRepository");
 const createTodoUseCaseFactory = require("@supertodo/application/usecases/createTodo");
 const getTodosUseCaseFactory = require("@supertodo/application/usecases/getTodos");
 
@@ -29,12 +29,14 @@ const createdTodoEvents = new EventEmitter();
 
 function createTodoHandler(call, callback) {
     try {
-        const { title } = call.request;
-        const todo = createTodo({ title });
+        const { title, description, completed, author } = call.request;
+
+        const todo = createTodo({ title, description, completed, author });
         callback(null, {
-            id: todo.id,
             title: todo.title,
+            description: todo.description,
             completed: todo.completed,
+            author: todo.author,
         });
 
         createdTodoEvents.emit("todo-created", todo);
@@ -45,27 +47,50 @@ function createTodoHandler(call, callback) {
 
 function listTodosHandler(call, callback) {
     try {
-        const todos = getTodos();
-        const responseTodos = todos.map((todo) => ({
+        const todos = getTodos(); // Assume this returns an array of todo objects
+        // Map each todo into a plain object matching CreateTodoResponse:
+        const todosArray = todos.map((todo) => ({
             id: todo.id || null,
             title: todo.title || null,
-            completed: todo.completed || false,
+            description: todo.description || null,
+            completed: todo.completed || null,
+            author: todo.author || null,
         }));
-        callback(null, { todos: responseTodos });
+
+        // Return an object with a key "todos" that is the array:
+        callback(null, { todos: todosArray });
     } catch (err) {
         callback(err);
     }
 }
 
 function subscribeTodosHandler(call) {
+    // Listener that writes new todos to the stream.
     const listener = (newTodo) => {
-        call.write(newTodo);
+        try {
+            // Write the new todo to the stream.
+            call.write({
+                id: newTodo.id || null,
+                title: newTodo.title || null,
+                description: newTodo.description || null,
+                completed: newTodo.completed || null,
+                author: newTodo.author || null,
+            });
+        } catch (error) {
+            console.error("Error while writing to stream:", error);
+        }
     };
 
     createdTodoEvents.on("todo-created", listener);
 
+    // Listen for errors on the stream so that they are handled gracefully.
+    call.on("error", (err) => {
+        console.error("Stream error occurred:", err);
+    });
+
     call.on("cancelled", () => {
         createdTodoEvents.removeListener("todo-created", listener);
+        console.log("Stream cancelled by client.");
     });
 }
 
@@ -85,7 +110,8 @@ function main() {
     grpcServerReflection.addReflection(server, descriptorPath);
 
     const host = process.env.SERVER_HOST || "0.0.0.0";
-    const port = process.env.GRPC_PORT || "50051";
+    const port = process.env.GRPC_PORT || "9090";
+
     const bindAddress = `${host}:${port}`;
     server.bindAsync(
         bindAddress,
