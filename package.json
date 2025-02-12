@@ -6,10 +6,13 @@
         "src/application",
         "src/domain",
         "src/infrastructure/database",
+        "src/infrastructure/interfaces/graphql",
         "src/infrastructure/interfaces/grpc",
         "src/infrastructure/web"
     ],
     "scripts": {
+        "graphql:start": "npm run start --workspace @supertodo/graphql-interface",
+        "graphql:dev": "npm run dev --workspace @supertodo/graphql-interface",
         "grpc:start": "npm run start --workspace @supertodo/grpc-interface",
         "grpc:dev": "npm run dev --workspace @supertodo/grpc-interface",
         "grpc:gen:todo": "npm run gen:todo.proto --workspace @supertodo/grpc-interface",
